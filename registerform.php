@@ -209,7 +209,7 @@
                 <button type="submit">Register</button>
             </div>
         </form>
-        <p class="footer-text">Already have an account? <a href="index.php">Login here</a></p>
+        <p class="footer-text">Already have an account? <a href="login.php">Login here</a></p>
     </div>
 
     <div id="notification" class="notification">

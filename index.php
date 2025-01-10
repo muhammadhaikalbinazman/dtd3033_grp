@@ -1,3 +1,9 @@
+<?php session_start();
+if (!isset($_SESSION['username'])) {
+    header('Location: login.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,6 +80,7 @@
         <a href="about.php">About</a>
         <a href="contact.php">Contact</a>
         <a href="login.php">Login</a>
+        <a href="logout.php" style="float:right">Logout</a>
     </nav>
     <main>
         <h2>Welcome to the Book Management System</h2>

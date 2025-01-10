@@ -10,34 +10,9 @@ if (!isset($_SESSION['username'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Management System</title>
+    <link rel="stylesheet" href="layout.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 1rem 0;
-            text-align: center;
-        }
-        nav {
-            background-color: #333;
-            overflow: hidden;
-        }
-        nav a {
-            float: left;
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 0.75rem 1rem;
-            text-decoration: none;
-        }
-        nav a:hover {
-            background-color: #575757;
-        }
+
         main {
             padding: 2rem;
             text-align: center;
@@ -69,22 +44,14 @@ if (!isset($_SESSION['username'])) {
     </style>
 </head>
 <body>
-    <header>
-        <h1>Book Management System</h1>
-        <p>Your one-stop solution to manage books efficiently</p>
-    </header>
-    <nav>
-        <a href="index.php">Home</a>
-        <a href="add_book.php">Add Book</a>
-        <a href="view_books.php">View Books</a>
-        <a href="about.php">About</a>
-        <a href="contact.php">Contact</a>
-        <a href="login.php">Login</a>
-        <a href="logout.php" style="float:right">Logout</a>
-    </nav>
+
+<?php 
+  include 'header.php';
+  include 'menu.php';
+?>
     <main>
-        <h2>Welcome to the Book Management System</h2>
-        <p>Manage your library, track book details, and much more.</p>
+    <h2>Welcome to the Book Management System</h2>
+    <p>Manage your library, track book details, and much more.</p>
         <div class="features">
             <div class="feature">
                 <h3>Add New Books</h3>
@@ -100,8 +67,6 @@ if (!isset($_SESSION['username'])) {
             </div>
         </div>
     </main>
-    <footer>
-        <p>&copy; <?php echo date("Y"); ?> Book Management System. All rights reserved.</p>
-    </footer>
+    <?php include 'footer.php'; ?>
 </body>
 </html>

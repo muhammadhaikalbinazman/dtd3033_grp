@@ -59,48 +59,7 @@ $conn->close();
             <!-- Feature content here -->
         </div>
     </main>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Management System</title>
-    <link rel="stylesheet" href="layout.css">
-    <style>
 
-        main {
-            padding: 2rem;
-            text-align: center;
-        }
-        .features {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-        .feature {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin: 1rem;
-            padding: 1rem;
-            width: 250px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 1rem 0;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
-</head>
-<body>
 
 <?php 
   include 'header.php';

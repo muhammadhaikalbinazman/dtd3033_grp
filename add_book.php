@@ -1,21 +1,32 @@
 <?php
-include 'dbconfig.php';
+include 'dbconfig.php'; // Include database configuration
 
+// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $author = $_POST['author'];
     $year = $_POST['year'];
     $copies = $_POST['copies'];
 
-    $sql = "INSERT INTO books (title, author, publication_year, available_copies) VALUES ('$title', '$author', $year, $copies)";
+    // Validate input to prevent SQL injection
+    $title = $conn->real_escape_string($title);
+    $author = $conn->real_escape_string($author);
+    $year = intval($year);
+    $copies = intval($copies);
+
+    // Insert into the correct table (`bookForm`)
+    $sql = "INSERT INTO bookForm (title, author, publication_year, available_copies) VALUES ('$title', '$author', $year, $copies)";
+
     if ($conn->query($sql) === TRUE) {
-        header('Location: display_books.php');
-        exit();
+        echo json_encode(['success' => true, 'message' => 'Book added successfully.']);
     } else {
-        $error = "Error: " . $conn->error;
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $conn->error]);
     }
+    exit();
 }
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,24 +96,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #218838;
         }
 
-        table {
-            width: 100%;
-            margin-top: 30px;
-            border-collapse: collapse;
+        .message {
+            margin-top: 20px;
+            font-size: 16px;
         }
 
-        table th, table td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
+        .message.success {
+            color: green;
         }
 
-        table th {
-            background-color: #f2f2f2;
-        }
-
-        table td {
-            background-color: #fff;
+        .message.error {
+            color: red;
         }
     </style>
 </head>
@@ -112,70 +116,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 include 'header.php';
 include 'menu.php';
 ?>
+
 <div class="container">
     <h2>Enter Book Details</h2>
 
-    <form id="bookForm">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" id="title" name="title" required>
-        </div>
-        <div class="form-group">
-            <label for="author">Author</label>
-            <input type="text" id="author" name="author" required>
-        </div>
-        <div class="form-group">
-            <label for="year">Year</label>
-            <input type="number" id="publication_year" name="year" required>
-        </div>
-        <div class="form-group">
-            <label for="copies">Number of Copies</label>
-            <input type="number" id="available_copies" name="copies" required>
-        </div>
-        <button type="submit">Add Book</button>
-    </form>
+    <form id="bookForm" method="POST">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" required>
+    </div>
+    <div class="form-group">
+        <label for="author">Author</label>
+        <input type="text" id="author" name="author" required>
+    </div>
+    <div class="form-group">
+        <label for="year">Year</label>
+        <input type="number" id="year" name="year" required>
+    </div>
+    <div class="form-group">
+        <label for="copies">Number of Copies</label>
+        <input type="number" id="copies" name="copies" required>
+    </div>
+    <button type="submit">Add Book</button>
+</form>
 
-    <h3>Book List</h3>
-    <table id="bookTable">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Year</th>
-                <th>Copies</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Book list will be displayed here -->
-        </tbody>
-    </table>
+<div id="message" class="message"></div>
+
 </div>
 
 <script>
     document.getElementById('bookForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the form from refreshing the page
+    event.preventDefault(); // Prevent form from refreshing the page
 
-        // Get values from the form
-        const title = document.getElementById('title').value;
-        const author = document.getElementById('author').value;
-        const year = document.getElementById('year').value;
-        const copies = document.getElementById('copies').value;
+    // Get values from the form
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const year = document.getElementById('year').value;
+    const copies = document.getElementById('copies').value;
 
-        // Create a new row in the table
-        const table = document.getElementById('bookTable').getElementsByTagName('tbody')[0];
-        const newRow = table.insertRow();
+    // Send data to the server using AJAX
+    fetch('', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}&year=${year}&copies=${copies}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        const messageDiv = document.getElementById('message');
+        if (data.success) {
+            // Display success message
+            messageDiv.textContent = data.message;
+            messageDiv.className = 'message success';
 
-        // Insert new cells with the book details
-        newRow.insertCell(0).textContent = title;
-        newRow.insertCell(1).textContent = author;
-        newRow.insertCell(2).textContent = year;
-        newRow.insertCell(3).textContent = copies;
-
-        // Clear the form inputs
-        document.getElementById('bookForm').reset();
+            // Clear the form inputs
+            document.getElementById('bookForm').reset();
+        } else {
+            // Display error message
+            messageDiv.textContent = data.message;
+            messageDiv.className = 'message error';
+        }
+    })
+    .catch(error => {
+        const messageDiv = document.getElementById('message');
+        messageDiv.textContent = 'Error: ' + error;
+        messageDiv.className = 'message error';
     });
+});
 </script>
 
 </body>
 </html>
-

@@ -7,6 +7,7 @@ session_start(); // Start the session to access session variables
     <a href="add_book.php">Add Book</a>
     <a href="display_books.php">Display Books</a>
     <a href="contact.php">Contact</a>
+    <a href="add_book(admin).php">Add Book Admin</a>
     <div class="dropdown" style="float:right">
         <button class="dropbtn"><?php echo htmlspecialchars($_SESSION['user']); ?> ▼</button>
         <div class="dropdown-content">
@@ -16,25 +17,6 @@ session_start(); // Start the session to access session variables
 </div>
 
 <style>
-    .topnav {
-        overflow: hidden;
-        background-color: #333;
-    }
-
-    .topnav a {
-        float: left;
-        display: block;
-        color: #f2f2f2;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
-
-    .topnav a:hover {
-        background-color: #ddd;
-        color: black;
-    }
-
     .dropdown {
         float: right;
         overflow: hidden;

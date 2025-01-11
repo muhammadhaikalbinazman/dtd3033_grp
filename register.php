@@ -59,8 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             sendResponse(false, "Passwords do not match.");
         }
 
-        // HERE IS WHERE WE ADD THE SPECIFIC ERROR HANDLING FOR USERNAME AND EMAIL
-        
         // Check if username exists
         $check_username = "SELECT user_id FROM users WHERE name = ?";
         $stmt = $conn->prepare($check_username);
@@ -94,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Insert new user into the database
-        $insert_query = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'user')";
+        $insert_query = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'student')";
         $insert_stmt = $conn->prepare($insert_query);
         
         if (!$insert_stmt) {
@@ -109,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Set session variables for the new user
             $_SESSION['user_id'] = $conn->insert_id;
             $_SESSION['username'] = $username;
-            $_SESSION['role'] = 'user';
+            $_SESSION['role'] = 'student';
             
             sendResponse(true, "Registration successful!");
         } else {

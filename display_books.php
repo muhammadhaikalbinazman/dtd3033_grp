@@ -28,12 +28,6 @@ if (!$result) {
     <title>Books</title>
     <link rel="stylesheet" href="layout.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            padding: 20px;
-        }
-
         .container {
             background-color: #ffffff;
             padding: 30px;

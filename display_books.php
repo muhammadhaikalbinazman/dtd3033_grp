@@ -3,8 +3,8 @@ include 'dbconfig.php'; // Include database configuration
 
 // Handle delete request
 if (isset($_GET['delete'])) {
-    $id = intval($_GET['delete']);
-    $sql = "DELETE FROM bookForm WHERE id = $id";
+    $book_id = intval($_GET['delete']);
+    $sql = "DELETE FROM bookForm WHERE book_id = $book_id";
     if ($conn->query($sql) === TRUE) {
         header("Location: display_books.php");
         exit();
@@ -71,7 +71,7 @@ if (!$result) {
             background-color: #fff;
         }
 
-        .add-button, .delete-button {
+        .add-button, .edit-button, .delete-button {
             background-color: #28a745;
             color: #fff;
             border: none;
@@ -83,6 +83,14 @@ if (!$result) {
 
         .add-button:hover {
             background-color: #218838;
+        }
+
+        .edit-button {
+            background-color: #007bff;
+        }
+
+        .edit-button:hover {
+            background-color: #0056b3;
         }
 
         .delete-button {
@@ -108,7 +116,7 @@ include 'menu.php';
     <table>
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Book ID</th>
                 <th>Title</th>
                 <th>Author</th>
                 <th>Year</th>
@@ -119,13 +127,14 @@ include 'menu.php';
         <tbody>
             <?php while ($row = $result->fetch_assoc()): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($row['id']); ?></td>
+                    <td><?php echo htmlspecialchars($row['book_id']); ?></td>
                     <td><?php echo htmlspecialchars($row['title']); ?></td>
                     <td><?php echo htmlspecialchars($row['author']); ?></td>
                     <td><?php echo htmlspecialchars($row['publication_year']); ?></td>
                     <td><?php echo htmlspecialchars($row['available_copies']); ?></td>
                     <td>
-                        <a href="display_books.php?delete=<?php echo $row['id']; ?>" class="delete-button">Delete</a>
+                        <a href="edit_book.php?book_id=<?php echo $row['book_id']; ?>" class="edit-button">Edit</a>
+                        <a href="display_books.php?delete=<?php echo $row['book_id']; ?>" class="delete-button">Delete</a>
                     </td>
                 </tr>
             <?php endwhile; ?>
@@ -133,5 +142,6 @@ include 'menu.php';
     </table>
 </div>
 
+<?php include 'footer.php'; ?>
 </body>
 </html>

@@ -14,11 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $year = intval($year);
     $copies = intval($copies);
 
+    // Generate a random book_id
+    $book_id = rand(1000, 9999);
+
     // Insert into the correct table (`bookForm`)
-    $sql = "INSERT INTO bookForm (title, author, publication_year, available_copies) VALUES ('$title', '$author', $year, $copies)";
+    $sql = "INSERT INTO bookForm (book_id, title, author, publication_year, available_copies) VALUES ($book_id, '$title', '$author', $year, $copies)";
 
     if ($conn->query($sql) === TRUE) {
-        echo json_encode(['success' => true, 'message' => 'Book added successfully.']);
+        echo json_encode(['success' => true, 'message' => 'Book added successfully.', 'book_id' => $book_id]);
     } else {
         echo json_encode(['success' => false, 'message' => 'Error: ' . $conn->error]);
     }
@@ -186,5 +189,6 @@ include 'menu.php';
 });
 </script>
 
+<?php include 'footer.php'; ?>
 </body>
 </html>

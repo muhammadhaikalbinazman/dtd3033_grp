@@ -1,9 +1,83 @@
+<!-- <?php
+session_start(); // Start the session to access session variables
+?> -->
+
 <div class="topnav">
-        <a href="index.php">Home</a>
-        <a href="add_book.php">Add Book</a>
-        <a href="display_books.php">Display Books</a>
-        <a href="about.php">About</a>
-        <a href="contact.php">Contact</a>
-        <a href="login.php">Login</a>
-        <a href="logout.php" style="float:right">Logout</a>
+    <a href="index.php">Home</a>
+    <a href="add_book.php">Add Book</a>
+    <a href="display_books.php">Display Books</a>
+    <a href="contact.php">Contact</a>
+    <div class="dropdown" style="float:right">
+        <button class="dropbtn"><?php echo htmlspecialchars($_SESSION['user']); ?> ▼</button>
+        <div class="dropdown-content">
+            <a href="logout.php">Logout</a>
+        </div>
+    </div>
 </div>
+
+<style>
+    .topnav {
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    .topnav a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    .dropdown {
+        float: right;
+        overflow: hidden;
+    }
+
+    .dropdown .dropbtn {
+        font-size: 16px;
+        border: none;
+        outline: none;
+        color: white;
+        padding: 14px 16px;
+        background-color: inherit;
+        font-family: inherit;
+        margin: 0;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
+</style>

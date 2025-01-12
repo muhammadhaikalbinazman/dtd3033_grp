@@ -6,7 +6,8 @@ session_start(); // Start the session to access session variables
     <a href="index.php">Home</a>
     <a href="add_book.php">Add Book</a>
     <a href="display_books.php">Display Books</a>
-    <a href="contact.php">Contact</a>
+    <a href="borrow.php">Borrow</a>
+    <a href="borrowing-status.php">Status</a>
     <a href="add_book(admin).php">Add Book Admin</a>
     <div class="dropdown" style="float:right">
         <button class="dropbtn"><?php echo htmlspecialchars($_SESSION['user']); ?> ▼</button>

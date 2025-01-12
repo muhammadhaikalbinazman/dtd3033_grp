@@ -7,7 +7,25 @@
     background-color: #f4f4f9;
     padding: 20px;
 }
-  
+
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.book-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+}
+
+.book-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
   /* Header/Blog Title */
   .header {
     padding: 30px;

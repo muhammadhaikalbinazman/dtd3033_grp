@@ -11,11 +11,12 @@ include 'dbconfig.php';
 
 // Get user's borrowing records only
 $user_id = $_SESSION['user_id']; // Get the logged-in user's ID
-$sql = "SELECT bb.*, name 
+$sql = "SELECT bb.*, u.name 
         FROM bookborrowing bb 
-        INNER JOIN users u ON bb.user_id = u.id 
+        INNER JOIN users u ON bb.user_id = u.user_id 
         WHERE bb.user_id = ? 
-        ORDER BY bb.created_at DESC";
+        ORDER BY bb.borrow_date DESC";
+
 
 // Use prepared statement to prevent SQL injection
 $stmt = $conn->prepare($sql);
@@ -176,10 +177,6 @@ include 'menu.php';
 ?>
 
 <div class="container">
-    <div class="welcome-banner">
-        <span class="welcome-text">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
-        <span class="welcome-text">Your Borrowing History</span>
-    </div>
 
     <div class="filters">
         <div class="filter-group">
